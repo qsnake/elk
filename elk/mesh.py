@@ -260,3 +260,33 @@ def mesh_nist2_direct(a, b, N):
     exp = numpy.exp
     n = arange(N+1)
     return a * (exp(b*n) - 1)
+
+def mesh_elk_direct(sprmin, rmt, sprmax, nrmt, lradstp=4):
+    """
+    Calculates the Elk radial mesh.
+
+    'sprmin, rmt, sprmax, nrmt' parameters are read from the species file.
+
+    For example Pb.in contains:
+
+      0.220863E-06    2.0000   42.8183   700    : sprmin, rmt, sprmax, nrmt
+
+    And these paremeters need to be fed into mesh_elk_direct() to produce the
+    mesh. The 'lradstp' is a paremeter in Elk, and it is used to adjust the
+    number of points in the mesh.
+
+    """
+    # This is what is done inside Elk, so we need to do it as well:
+    # ! make the muffin-tin mesh commensurate with lradstp
+    nrmt -= (nrmt - 1) % lradstp
+
+    t1 = log(sprmax/sprmin) / log(rmt/sprmin)
+    t2 = (nrmt-1)*t1
+    spnr = int(t2) + 1
+
+    t1 = 1. / (nrmt-1)
+    t2 = log(rmt/sprmin)
+    n = arange(spnr)
+    r = sprmin * exp(n*t1*t2)
+
+    return r
