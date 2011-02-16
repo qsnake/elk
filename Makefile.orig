@@ -4,7 +4,7 @@ MAKE = make
 include make.inc
 
 all:
-	cd src; $(MAKE) all
+	cd src; $(MAKE) -f Makefile.orig all
 	cd src/eos; $(MAKE)
 	cd src/spacegroup; $(MAKE)
 

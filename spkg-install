@@ -23,7 +23,7 @@ EOF
 
 # Elk doesn't compile well in parallel:
 unset MAKEFLAGS
-make
+make -f Makefile.orig
 
 # Install executables:
 cp src/elk "$SPKG_LOCAL"/bin
