@@ -276,6 +276,10 @@ def mesh_elk_direct(sprmin, rmt, sprmax, nrmt, lradstp=4):
     number of points in the mesh.
 
     """
+
+    log = math.log
+    exp = numpy.exp
+
     # This is what is done inside Elk, so we need to do it as well:
     # ! make the muffin-tin mesh commensurate with lradstp
     nrmt -= (nrmt - 1) % lradstp
