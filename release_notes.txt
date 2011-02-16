@@ -1,0 +1,106 @@
+elk-1.2.15
+-SS and JKD added the Bethe-Salpeter equation (BSE) for linear optics
+ calculations. This feature works with LDA+U, magnetism and spin-orbit coupling.
+ It is also parallelised with MPI and can be run across a cluster. See the
+ 'LiF-BSE' and 'Si-BSE' examples. Currently an experimental feature
+-Alexey Baranov added density and magnetic structure factors: see the
+ 'MnO-str-factors' example
+-AB also fixed a problem with output of the spacegroup code
+-full frequency and G vector dependent RPA inverse dielectric function now
+ available with 'task=180'. Works with metals, insulators, magnetism and SOC,
+ and can be calculated for arbitrary complex frequencies. Also parallelised with
+ OpenMP and MPI. Thanks to Anton Kozhevnikov for discussions
+-added lots more MPI parallelism and made the code more MPI-friendly
+-many optimisations across the whole code
+-Simone Chiesa, Anton Kozhevnikov and Adolfo Eguiluz found a problem in the
+ plotting of the partial DOS which has now been fixed
+-the first-variational eigenvalue matrices can now be stored and diagonalised in
+ non-packed storage mode: use 'tpmat=.false.'. This can speed up calculations at the expense of memory
+-Tyrel McQueen found a bug in the 'findprim' routine, now fixed
+-TMcQ also suggested a change to how the code connects the points of the
+ 'plot1d' vertices
+-Martin Stankovski suggested that 'ecvcut' be made into an input variable,
+ allowing the core-valence cut-off to be adjusted
+-added the phonon calculation of Ni to the examples
+-Jerzy Goraus contributed a script for calculating VB-XPS spectra from PDOS*
+ files; and also one for converting the Wien2K struct file to spacegroup.in
+-modified some species files thanks to tests done by J. Goraus
+-Henning Glawe suggested including the version number in the release directory
+-upgraded to LAPACK 3.3.0
+-made tolerance for finding the linearisation energies (epsband) much smaller:
+ this improves the overall stability of the self-consistent loop
+Notes for developers
+-arguments to 'genppts' have changed; also the non-reduced k-points are now
+ stored in the remaining part of the reduced k-point arrays
+
+elk-1.1.4
+-message passing interface (MPI) parallel runs now available; scalable to
+ hundreds of cores across a cluster; can also be used as hybrid OpenMP+MPI
+ parallelism for maximum efficiency; with thanks to Bhagawan Sahu for help
+ with testing; see manual for compilation and running instructions
+-S. Sharma added susceptibility tensor for non-linear optical second-harmonic
+ generation (SHG); see example 'GaAs-NLO' for details
+-added spin-orbit correction to momentum matrix elements; affects linear and
+ non-linear optics
+-optical calculations now work in combination with spin-spirals
+-updated interface to version 1.0 of the ETSF exchange-correlation library,
+ libxc; thanks to M. Marques and T. McQueen for assistance
+-fixed bug spotted by T. McQueen involving using multiple tasks in conjunction
+ with 'primcell=.true.'
+-A. Kozhevnikov fixed bug in 'xc_pwca.f90'
+-A. Kozhevnikov also fixed serious bug in 'getevecfv.f90'
+-F. Cricchio changed the order of lattice vector angles in 'spacegroup' utility
+ to 'bc, ac, ab' which corresponds to the convention alpha, beta, gamma
+-removed scissor correction from eigenvalue solver; now it is used, as before,
+ only in optics calculations
+-T. McQueen suggested an improvement to the routine which generates the path in
+ reciprocal space for bandstructure plots, 'connect.f90', which has been
+ implemented
+-fixed problem with XCrysDen Fermi surface plots, spotted by FC
+-various optimisations and simplifications
+Notes for developers
+-arguments to 'zpotcoul' have changed in anticipation of linear-response
+ phonons; should now be called in conjunction with 'genzvclmt'
+
+elk-1.0.17
+-fixed problem with Fermi surface generation introduced in the last version
+-E. K. U. Gross added to list of main developers
+-no other changes
+
+elk-1.0.16
+-fixed problem in linear optics calculations for metals - thanks to Antonio
+ Sanna, Fabio Bernardini and Sandro Massida for pointing this out
+-FC and LN added option for automatic determination of APW linearisation
+ energies (use 'autolinengy=.true.')
+-Marty Blaber made a script which allows for semi-automatic labeling of the
+ vertex locations with gnuplot (found in the 'elk/utilities' directory)
+-FC and LN fixed problem with some compilers when writing FERMISURF.OUT
+-FC and LN fixed problem with writing XCrysDen Fermi surface plots
+-Anton Kozhevnikov found and fixed a problem with the generation of the
+ irreducible representation file 'ELMIREP.OUT'
+-Torbjörn Björkman added a new routine which automatically determines the
+ smearing width from the k-point density. See 'autoswidth' in the manual and
+ the example 'Nb-autoswidth' for details
+-added a constant electric field E in the form of a saw-tooth potential: set the
+ vector 'efieldc' (experimental)
+-added a constant vector potential A to the Hamiltonian to generate constant
+ currents: set the variable 'afieldc' (experimental)
+-FC and LN fixed problem with a spin-polarised GGA routine
+-FC and LN pointed out that the energy term associated with the excess charge
+ compensating background should be zero. This term has now been removed
+-code now more memory efficient thanks to smarter array allocation
+-the variable 'rgkmax' can now be made arbitrarily large without risk of
+ instability
+-removed variable 'cfdamp'
+-Anton Kozhevnikov pointed out that the radial functions were being redundantly
+ calculated for equivalent atoms -- now fixed
+-Anton Filanovich added several questions to the FAQ
+-scissors correction (given by the variable 'scissor') now applied consistently
+ immediately after the generation of the eigenvalues
+-FC and LN removed the spherical harmonic transform matrices with rank lmmaxapw
+-added dielectric function calculation for arbitrary q-vector, see 'LiF-Yambo'
+ example (experimental)
+-by setting 'gmaxvr=0', the G-vector cut-off for the potential and density is
+ automatically determined from 'gmaxvr=2*gkmax+epslat'
+-various bug fixes, simplifications and optimisations
+
