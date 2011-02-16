@@ -1,0 +1,25 @@
+#! /bin/sh
+
+if [ "$SPKG_LOCAL" = "" ]; then
+   echo "SPKG_LOCAL undefined ... exiting";
+   echo "Maybe run 'qsnake --shell'?"
+   exit 1
+fi
+
+
+set -e
+
+cat > make.inc << EOF
+MAKE = make
+F90 = gfortran
+F90_OPTS = -O3 -funroll-loops -ffast-math
+F77 = gfortran
+F77_OPTS = -O3 -funroll-loops -ffast-math
+AR = ar
+LIB_SYS =
+LIB_LPK = lapack.a blas.a
+LIB_FFT = fftlib.a
+EOF
+
+unset MAKEFLAGS
+make
