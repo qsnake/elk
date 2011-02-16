@@ -9,6 +9,14 @@ fi
 
 set -e
 
+# Install Python wrappers:
+cmake -DCMAKE_INSTALL_PREFIX="$SPKG_LOCAL" .
+make
+make install
+
+
+# Install elk itself:
+
 cat > make.inc << EOF
 MAKE = make
 F90 = gfortran
