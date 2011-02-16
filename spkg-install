@@ -21,5 +21,11 @@ LIB_LPK = lapack.a blas.a
 LIB_FFT = fftlib.a
 EOF
 
+# Elk doesn't compile well in parallel:
 unset MAKEFLAGS
 make
+
+# Install executables:
+cp src/elk "$SPKG_LOCAL"/bin
+cp src/spacegroup/spacegroup "$SPKG_LOCAL"/bin
+cp src/eos/eos "$SPKG_LOCAL"/bin
