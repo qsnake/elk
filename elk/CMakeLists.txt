@@ -22,6 +22,6 @@ install(TARGETS pyelk
             ARCHIVE DESTINATION ${PY_PATH}
             LIBRARY DESTINATION ${PY_PATH}
         )
-install(FILES __init__.py mesh.py
+install(FILES __init__.py
     DESTINATION ${PY_PATH}
     )

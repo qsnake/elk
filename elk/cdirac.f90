@@ -8,7 +8,7 @@ implicit none
 
 contains
 
-subroutine c_rdirac(sol, n, l, k, np, nr, r, vr, eval, g0, f0) bind(c)
+subroutine c_rdirac(sol, n, l, k, np, nr, r, vr, eval, y) bind(c)
 real(c_double), intent(in) :: sol
 integer(c_int), intent(in) :: n
 integer(c_int), intent(in) :: l
@@ -18,11 +18,13 @@ integer(c_int), intent(in) :: nr
 real(c_double), intent(in) :: r(nr)
 real(c_double), intent(in) :: vr(nr)
 real(c_double), intent(inout) :: eval
-real(c_double), intent(out) :: g0(nr)
-real(c_double), intent(out) :: f0(nr)
+real(c_double), intent(out) :: y(nr)
 
-call rdirac(sol, n, l, k, np, nr, r, vr, eval, g0, f0)
-! !INPUT/OUTPUT PARAMETERS:
+real(c_double) :: g(nr)
+real(c_double) :: f(nr)
+
+call rdirac(sol, n, l, k, np, nr, r, vr, eval, g, f)
+! INPUT/OUTPUT PARAMETERS for rdirac:
 !   (sol,n,l,k,np,nr,r,vr,eval,g0,f0)
 !   sol  : speed of light in atomic units (in,real)
 !   n    : principal quantum number (in,integer)
@@ -35,6 +37,8 @@ call rdirac(sol, n, l, k, np, nr, r, vr, eval, g0, f0)
 !   eval : eigenvalue without rest-mass energy (inout,real)
 !   g0   : major component of the radial wavefunction (out,real(nr))
 !   f0   : minor component of the radial wavefunction (out,real(nr))
+
+y(:) = sqrt(f(:)**2 + g(:)**2)
 end subroutine
 
 end module
