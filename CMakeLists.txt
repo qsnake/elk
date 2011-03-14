@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 project(elk)
 enable_language(Fortran)
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH $ENV{SPKG_LOCAL}/share/qsnake/cmake)
 
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
     # for gfortran, we need to use -fPIC
