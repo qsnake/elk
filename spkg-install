@@ -25,15 +25,14 @@ F77 = gfortran
 F77_OPTS = -O3 -funroll-loops -ffast-math
 AR = ar
 LIB_SYS =
-
-if [ "$(uname)" = "Darwin" ]; then
-    LIB_LPK = -framework Accelerate
-else
-    LIB_LPK = lapack.a blas.a
-fi
-
 LIB_FFT = fftlib.a
 EOF
+
+if [ "$(uname)" = "Darwin" ]; then
+    echo "LIB_LPK = -framework Accelerate" >> make.inc
+else
+    echo "LIB_LPK = lapack.a blas.a" >> make.inc
+fi
 
 # Elk doesn't compile well in parallel:
 unset MAKEFLAGS
