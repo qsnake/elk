@@ -25,7 +25,13 @@ F77 = gfortran
 F77_OPTS = -O3 -funroll-loops -ffast-math
 AR = ar
 LIB_SYS =
-LIB_LPK = lapack.a blas.a
+
+if [ "$(uname)" = "Darwin" ]; then
+    LIB_LPK = -framework Accelerate
+else
+    LIB_LPK = lapack.a blas.a
+fi
+
 LIB_FFT = fftlib.a
 EOF
 
